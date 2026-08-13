@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício Listas</title>
+    <style>
+        .mostra {
+            display: block;
+        }
+        .esconde {
+            display: none;
+        }
+        li {
+            cursor: pointer;
+        }
+        button {
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function mudaVisibilidade(id) {
+            const elementoHTML = document.getElementById(id);
+            if (elementoHTML.className === "mostra") {
+                elementoHTML.className = "esconde";
+            } else {
+                elementoHTML.className = "mostra";
+            }
+            atualizaBotaoGeral();
+        }
+
+        function alternarTodos() {
+            const botao = document.getElementById("btnMestre");
+            const listas = document.querySelectorAll("ul");
+
+            if (botao.textContent === "Esconder tudo") {
+                listas.forEach(lista => lista.className = "esconde");
+                botao.textContent = "Exibir tudo";
+            } else {
+                listas.forEach(lista => lista.className = "mostra");
+                botao.textContent = "Esconder tudo";
+            }
+        }
+
+        function atualizaBotaoGeral() {
+            const listas = document.querySelectorAll("ul");
+            const botao = document.getElementById("btnMestre");
+
+            let visiveis = 0;
+            listas.forEach(lista => {
+                if (lista.className === "mostra") {
+                    visiveis++;
+                }
+            });
+
+            if (visiveis === 0) {
+                botao.textContent = "Exibir tudo";
+            } else if (visiveis === listas.length) {
+                botao.textContent = "Esconder tudo";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <button id="btnMestre" onclick="alternarTodos()">Esconder tudo</button>
+
+    <ol>
+        <li onclick="mudaVisibilidade('listaTeste1')">Teste1</li>
+        <ul id="listaTeste1" class="mostra">
+            <li>bla</li>
+            <li>bla</li>
+            <li>bla</li>
+        </ul>
+        <li onclick="mudaVisibilidade('listaTeste2')">Teste2</li>
+        <ul id="listaTeste2" class="mostra">
+            <li>ble</li>
+            <li>ble</li>
+            <li>ble</li>
+        </ul>
+    </ol>
+
+</body>
+</html>
