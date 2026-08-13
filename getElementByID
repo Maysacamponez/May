@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercícios de Manipulação do DOM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+
+    section {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+    #oculto {
+      display: none;
+    }
+    #foto {
+      display: block;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    .caixa {
+      width: 50px;
+      height: 50px;
+      background-color: #ddd;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <h1 id="titulo">Título Original</h1>
+  </section>
+
+  <section>
+    <p class="destaque">Este parágrafo vai ficar azul.</p>
+  </section>
+
+  <section>
+    <ul>
+      <li class="item">Item 1</li>
+      <li class="item">Item 2</li>
+      <li class="item">Item 3</li>
+    </ul>
+  </section>
+
+  <section>
+    <p id="oculto">Surpresa! Este é o texto que estava oculto.</p>
+    <button id="btn-mostrar">Mostrar Texto</button>
+  </section>
+
+  <section>
+    <input type="text" id="entrada" placeholder="Digite algo...">
+    <button id="btn-atualizar">Atualizar Texto</button>
+    <p id="resultado">O texto do input vai aparecer aqui.</p>
+  </section>
+
+  <section>
+    <p>Caixas presentes no DOM (veja o resultado no console):</p>
+    <div class="caixa"></div>
+    <div class="caixa"></div>
+    <div class="caixa"></div>
+    <div class="caixa"></div>
+    <div class="caixa"></div>
+  </section>
+
+  <section>
+    <img id="foto" src="https://www.istockphoto.com/br/foto/a%C3%A7a%C3%AD-fruta-amaz%C3%B4nica-gm1360042022-433191577" alt="Foto" width="150">
+    <br>
+    <button id="btn-trocar-imagem">Trocar Imagem</button>
+  </section>
+
+  <section>
+    <button class="botao-estiloso">Botão Estiloso</button>
+  </section>
+
+  <section>
+    <p id="mensagem">Mensagem antiga...</p>
+  </section>
+
+  <script>
+    const titulo = document.getElementById("titulo");
+    titulo.textContent = "Olá, Mundo!";
+
+    const paragrafoDestaque = document.querySelector(".destaque");
+    paragrafoDestaque.style.color = "blue";
+
+    const itens = document.querySelectorAll(".item");
+    itens.forEach(item => {
+      item.textContent = "Item modificado";
+    });
+
+    const btnMostrar = document.getElementById("btn-mostrar");
+    const textoOculto = document.getElementById("oculto");
+
+    btnMostrar.addEventListener("click", () => {
+      textoOculto.style.display = "block";
+    });
+
+    const entradaInput = document.getElementById("entrada");
+    const btnAtualizar = document.getElementById("btn-atualizar");
+    const textoResultado = document.getElementById("resultado");
+
+    btnAtualizar.addEventListener("click", () => {
+      textoResultado.textContent = entradaInput.value;
+    });
+
+    const caixas = document.querySelectorAll(".caixa");
+    console.log("Quantidade de caixas encontradas:", caixas.length);
+
+    const foto = document.getElementById("foto");
+    const btnTrocarImagem = document.getElementById("btn-trocar-imagem");
+
+    btnTrocarImagem.addEventListener("click", () => {
+      foto.src = "https://www.shutterstock.com/pt/image-photo/layered-m-confetti-2624254291?trackingId=8d5b2bfa-39c6-4111-b7a7-64c740017aac&listId=searchResults";
+    });
+
+    const botaoEstiloso = document.querySelector(".botao-estiloso");
+    botaoEstiloso.style.backgroundColor = "#4CAF50";
+    botaoEstiloso.style.color = "white";
+    botaoEstiloso.style.border = "none";
+    botaoEstiloso.style.padding = "10px 20px";
+    botaoEstiloso.style.borderRadius = "20px";
+    botaoEstiloso.style.cursor = "pointer";
+
+    const mensagem = document.getElementById("mensagem");
+    mensagem.textContent = "Texto alterado com sucesso usando getElementById!";
+  </script>
+
+</body>
+</html>
