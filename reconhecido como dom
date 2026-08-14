@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 20px;
+        }
+
+        .container {
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            height: 35px;
+            font-size: 24px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            padding: 2px 5px;
+        }
+        .botoes {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 5px 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 32px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculadora</h1>
+
+        <input type="number" id="num1" value="2">
+        <input type="number" id="num2" value="3">
+
+        <div class="botoes">
+            <button onclick="calcular('+')">+</button>
+            <button onclick="calcular('-')">-</button>
+            <button onclick="calcular('x')">x</button>
+            <button onclick="calcular('/')">/</button>
+        </div>
+
+        <h2 id="resultado">Resultado: 2 x 3 = 6</h2>
+    </div>
+
+    <script>
+        function calcular(operacao) {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const elementoResultado = document.getElementById('resultado');
+            if (isNaN(num1) || isNaN(num2)) {
+                elementoResultado.innerText = 'Por favor, digite números válidos.';
+                return;
+            }
+
+            let res = 0;
+            switch (operacao) {
+                case '+':
+                    res = num1 + num2;
+                    break;
+                case '-':
+                    res = num1 - num2;
+                    break;
+                case 'x':
+                    res = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        elementoResultado.innerText = 'Erro: Divisão por zero!';
+                        return;
+                    }
+                    res = num1 / num2;
+                    break;
+            }
+            elementoResultado.innerText = `Resultado: ${num1} ${operacao} ${num2} = ${res}`;
+        }
+    </script>
+
+</body>
+</html>
