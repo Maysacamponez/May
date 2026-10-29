@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Nomes com htmx</title>
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { font-size: 1rem; padding: 0.5rem; margin: 5px 0; }
+    #status, #lista { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <h1>Cadastro de Nomes</h1>
+
+  <form id="form-nome" onsubmit="return false;">
+    <label for="nome">Digite um nome:</label><br />
+    <input
+      type="text"
+      id="nome"
+      name="nome"
+      required
+      autocomplete="off"
+      />
+    <button id="btn-salvar">Salvar Nome</button>
+  </form>
+
+  <button id="btn-listar" hx-get="https://ola-tp1.onrender.com/nomes" hx-target="#lista" hx-swap="innerHTML">
+    Listar Nomes
+  </button>
+
+  <div id="status" aria-live="polite"></div>
+  <div id="lista"></div>
+
+<script>
+  const form = document.getElementById('form-nome');
+  const inputNome = document.getElementById('nome');
+  const statusDiv = document.getElementById('status');
+
+  form.addEventListener('submit', () => {
+    const nome = inputNome.value.trim();
+    if (!nome) {
+      statusDiv.textContent = 'Por favor, digite um nome.';
+      return;
+    }
+
+    statusDiv.textContent = 'Verificando se o nome já existe...';
+
+    // Verificar se o nome existe
+    fetch(`https://ola-tp1.onrender.com/existe?nome=${encodeURIComponent(nome)}`)
+      .then(response => response.json())
+      .then(existe => {
+        if (existe === true) {
+          statusDiv.textContent = `O nome "${nome}" já está cadastrado.`;
+        } else {
+          statusDiv.textContent = `Nome não encontrado. Cadastrando "${nome}"...`;
+
+          // Salvar o nome
+          fetch('https://ola-tp1.onrender.com/nomes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome })
+          })
+            .then(res => res.text())
+            .then(textoResposta => {
+              statusDiv.textContent = `Resposta do servidor: ${textoResposta}`;
+              inputNome.value = '';
+            })
+            .catch(() => {
+              statusDiv.textContent = 'Erro ao salvar o nome no servidor.';
+            });
+        }
+      })
+      .catch(() => {
+        statusDiv.textContent = 'Erro ao verificar se o nome existe.';
+      });
+  });
+</script>
+
+</body>
+</html>
